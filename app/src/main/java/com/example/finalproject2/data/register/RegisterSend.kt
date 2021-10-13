@@ -9,7 +9,7 @@ data class RegisterSend(
 
 
 data class UserLocation(
-    //val si : String,
+    val si : String,
     val gu : String,
-    val dong : String
+    //val dong : String
 )
