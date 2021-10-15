@@ -28,7 +28,7 @@ class BoardAdapter(val context: Context, private val dataSet: ArrayList<BoardUni
             view.setOnClickListener {
                 val pos = adapterPosition
                 if(pos != RecyclerView.NO_POSITION){
-                    val intent = Intent(context,Register::class.java)
+                    val intent = Intent(context,ShowItem::class.java)
                     intent.putExtra("DATA",dataSet[pos])
                     context.startActivity(intent)
                 }
@@ -44,7 +44,7 @@ class BoardAdapter(val context: Context, private val dataSet: ArrayList<BoardUni
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             val bitmap = withContext(Dispatchers.IO){
-                ImageLoader.loadImage(dataSet[position].imgProfile)
+                ImageLoader.loadImage(dataSet[position].imgProfile[0])
             }
             viewHolder.dogimage.setImageBitmap(bitmap)
         }

@@ -6,7 +6,7 @@ import com.example.finalproject2.data.register.UserLocation
 import java.io.Serializable
 
 data class BoardUnit (
-    val imgProfile: String,
+    val imgProfile: ArrayList<String>,
     val name: String,
     val gender: String,
     val location: UserLocation,

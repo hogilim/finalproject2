@@ -36,9 +36,6 @@ class Register:AppCompatActivity() {
         binding.selectGu.adapter = adapter_gu
         binding.selectDong.adapter = adapter_Dong
 
-        val a = intent.getSerializableExtra("DATA") as BoardUnit
-        binding.editId.setText(a.name)
-
         register(binding,myAPI,location_Si,location_gu,location_Dong)
 
     }
