@@ -19,6 +19,9 @@ interface RetrofitService {
     @GET("hogi")
     fun test():Call<Boolean>
 
+    @GET("image")
+    fun test2():Call<String>
+
     @Headers("content-type: application/json")
     @POST("register")
     fun register(

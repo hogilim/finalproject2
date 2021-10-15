@@ -13,8 +13,8 @@ object RetrofitClient {
         if(instance == null){
             instance = Retrofit.Builder()
                 .baseUrl("http://192.168.200.133:8080/")
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                //.addConverterFactory(ScalarsConverterFactory.create())
                 .build()
         }
         return instance!!
