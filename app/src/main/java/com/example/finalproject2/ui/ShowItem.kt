@@ -16,14 +16,14 @@ class ShowItem : AppCompatActivity() {
     }
     private fun showData(binding: ActivityShowitemBinding){
         val data : BoardUnit = intent.getSerializableExtra("DATA") as BoardUnit
-        for (i in data.imgProfile)
+        for (i in data.fileUris)
             println(i)
-        val Images = data.imgProfile
+        val Images = data.fileUris
 
         val madapter = ShowItemImageAdapter(Images)
         binding.dogimagelist.adapter = madapter
 
-        binding.name.text = data.name
+        binding.name.text = data.dogName
         binding.gender.text = data.gender
     }
 }

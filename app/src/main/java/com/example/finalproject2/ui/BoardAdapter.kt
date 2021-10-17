@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BoardAdapter(val context: Context, private val dataSet: ArrayList<BoardUnit>) : RecyclerView.Adapter<BoardAdapter.ViewHolder>(){
+class BoardAdapter(private val context: Context, private val dataSet: ArrayList<BoardUnit>) : RecyclerView.Adapter<BoardAdapter.ViewHolder>(){
 
     class ViewHolder(context : Context, view: View, dataSet: ArrayList<BoardUnit>) : RecyclerView.ViewHolder(view){
         val dogimage : ImageView = view.findViewById(R.id.image)
@@ -44,14 +44,14 @@ class BoardAdapter(val context: Context, private val dataSet: ArrayList<BoardUni
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             val bitmap = withContext(Dispatchers.IO){
-                ImageLoader.loadImage(dataSet[position].imgProfile[0])
+                ImageLoader.loadImage(dataSet[position].fileUris[0])
             }
             viewHolder.dogimage.setImageBitmap(bitmap)
         }
-        viewHolder.dogname.text = dataSet[position].name
+        viewHolder.dogname.text = dataSet[position].dogName
         viewHolder.doggennder.text = dataSet[position].gender
-        viewHolder.location.text = dataSet[position].location.si + dataSet[position].location.gu
-        viewHolder.date.text = dataSet[position].date
+        viewHolder.location.text = dataSet[position].address.si + dataSet[position].address.gu
+        viewHolder.date.text = dataSet[position].regDate.toString()
     }
 
     override fun getItemCount() = dataSet.size

@@ -1,14 +1,20 @@
 package com.example.finalproject2.ui
 
-import android.graphics.Bitmap
-import android.net.Uri
 import com.example.finalproject2.data.register.UserLocation
 import java.io.Serializable
+import java.time.LocalDateTime
 
 data class BoardUnit (
-    val imgProfile: ArrayList<String>,
-    val name: String,
+    val id: Long,
+    val memberId: Long,
+    val fileIds: ArrayList<Long>,
+    val fileUris: ArrayList<String>,
+    val nickName: String,
+    val dogName: String,
+    val title: String,
+    val content: String,
     val gender: String,
-    val location: UserLocation,
-    val date: String
+    val address: UserLocation,
+    val regDate : LocalDateTime,
+    val lastModifiedDate: LocalDateTime
 ) : Serializable

@@ -1,15 +1,19 @@
 package com.example.finalproject2.data.board
 
+import com.example.finalproject2.ui.BoardUnit
+
 data class BoardResponse(
-    val lastpageno : Int,
-    val items : List<Item>,
+    val content : ArrayList<BoardUnit>,
+    val pageable : Pagable,
+    val totalPages : Int,
+    val totalElements : Int,
+    val last : Boolean
 )
 
-
-data class Item(
-    val sid : Long,
-    val nickname : String,
-    val image : String,  // image 어떤형식으로 보내줄건지?
-    val dogname : String,
-    val title : String
+data class Pagable(
+    val pageSize: Int,
+    val pageNumber: Int,
+    val offset: Int,
+    val paged: Boolean,
+    val empty: Boolean
 )
