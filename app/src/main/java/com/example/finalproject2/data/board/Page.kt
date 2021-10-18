@@ -2,7 +2,7 @@ package com.example.finalproject2.data.board
 
 import com.example.finalproject2.ui.BoardUnit
 
-data class BoardResponse(
+data class Page(
     val content : ArrayList<BoardUnit>,
     val pageable : Pageable,
     val totalPages : Int,
