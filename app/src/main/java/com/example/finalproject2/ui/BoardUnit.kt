@@ -14,7 +14,7 @@ data class BoardUnit (
     val title: String,
     val content: String,
     val gender: String,
-    val address: UserLocation,
-    val regDate : LocalDateTime,
-    val lastModifiedDate: LocalDateTime
+    val address: UserLocation?,
+    val regDate : String,
+    val lastModifiedDate: String
 ) : Serializable

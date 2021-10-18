@@ -1,6 +1,6 @@
 package com.example.finalproject2.retrofit2
 
-import com.example.finalproject2.data.board.BoardResponse
+import com.example.finalproject2.data.board.Page
 import com.example.finalproject2.data.board.BoardSend
 import com.example.finalproject2.data.login.LoginResponse
 import com.example.finalproject2.data.login.LoginSend
@@ -35,10 +35,11 @@ interface RetrofitService {
     ):Call<LoginResponse>
 
     @Headers("content-type: application/json")
-    @POST("Board")
+    @GET("dog-lost/dog-losts")
     fun board(
-        @Body board : BoardSend
-    ):Call<BoardResponse>
+       @Query("page") page: Int,
+       @Query("size") size: Int
+    ):Call<Page>
 
     @Headers("content-type: application/json")
     @POST("Unit")
@@ -54,7 +55,7 @@ interface RetrofitService {
     ):Call<String>
 
     @Headers("content-type: application/json")
-    @POST("lost")
+    @POST("dog-losts")
     fun lost(
         @Body lost : LostSend
     ):Call<String>
