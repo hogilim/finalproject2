@@ -40,7 +40,16 @@ class BoardAdapter(private val context: Context, private var dataSet: ArrayList<
             viewHolder.doggennder.text = dataSet[position].gender
             viewHolder.location.text = dataSet[position].address?.si + dataSet[position].address?.gu
             viewHolder.date.text = dataSet[position].regDate
-
+        }
+        init{
+            view.setOnClickListener {
+                val pos = adapterPosition
+                if(pos != RecyclerView.NO_POSITION){
+                    val intent = Intent(context, ShowItem::class.java)
+                    intent.putExtra("DATA",dataSet[pos])
+                    context.startActivity(intent)
+                }
+            }
         }
     }
 

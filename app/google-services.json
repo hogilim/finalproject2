@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "335264791740",
+    "project_id": "alarm-ccf0b",
+    "storage_bucket": "alarm-ccf0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335264791740:android:66a7e545c9e7567677e4b9",
+        "android_client_info": {
+          "package_name": "com.example.finalproject2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335264791740-e56me0h2jgclmg4mluefdb7u2mtjvrid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finalproject2",
+            "certificate_hash": "7737856ad096840be9d25f65c3b668e981dfe53e"
+          }
+        },
+        {
+          "client_id": "335264791740-itg9r5121e33f1k41t0roaieahnhcbec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIQdHut4ZTTcRRGdMMuOdQqvZU7dpIhG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335264791740-itg9r5121e33f1k41t0roaieahnhcbec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
