@@ -4,13 +4,13 @@ import com.example.finalproject2.ui.BoardUnit
 
 data class BoardResponse(
     val content : ArrayList<BoardUnit>,
-    val pageable : Pagable,
+    val pageable : Pageable,
     val totalPages : Int,
     val totalElements : Int,
     val last : Boolean
 )
 
-data class Pagable(
+data class Pageable(
     val pageSize: Int,
     val pageNumber: Int,
     val offset: Int,

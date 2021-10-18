@@ -1,5 +1,6 @@
 package com.example.finalproject2.data.board
 
 data class BoardSend(
-    val requestno : Int
+    val size : Int,
+    val page : Int
 )

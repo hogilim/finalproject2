@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject2.R
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BoardAdapter(private val context: Context, private val dataSet: ArrayList<BoardUnit>) : RecyclerView.Adapter<BoardAdapter.ViewHolder>(){
+class BoardAdapter(private val context: Context, private var dataSet: ArrayList<BoardUnit>) : RecyclerView.Adapter<BoardAdapter.ViewHolder>(){
 
     class ViewHolder(context : Context, view: View, dataSet: ArrayList<BoardUnit>) : RecyclerView.ViewHolder(view){
         val dogimage : ImageView = view.findViewById(R.id.image)
@@ -55,4 +56,8 @@ class BoardAdapter(private val context: Context, private val dataSet: ArrayList<
     }
 
     override fun getItemCount() = dataSet.size
+
+    fun dataUpdate(){
+        notifyDataSetChanged()
+    }
 }
