@@ -21,6 +21,7 @@ import retrofit2.Response
 import java.io.IOException
 
 class Register:AppCompatActivity() {
+    lateinit var token : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -35,28 +36,25 @@ class Register:AppCompatActivity() {
         val adapter_gu = ArrayAdapter<String>(this, R.layout.simple_list_item_1, location_gu)
         val adapter_Dong =
             ArrayAdapter<String>(this, R.layout.simple_list_item_1, location_Dong)
-        var token : String
 
         binding.selectSi.adapter = adapter_Si
         binding.selectGu.adapter = adapter_gu
         binding.selectDong.adapter = adapter_Dong
-
+        println("!!!!!!!!!!!!!")
         getToken(binding)
         register(binding,myAPI,location_Si,location_gu,location_Dong)
 
     }
 
     fun getToken(binding: ActivityRegisterBinding){
-        //var token : String = ""
-        Runnable {
+        Runnable{
             try {
                 FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         Log.i(TAG, "getInstanceId failed", task.exception)
                         return@addOnCompleteListener
                     }
-                    //token = task.result!!
-                    binding.editId.setText(task.result!!)
+                    token = task.result!!
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -68,7 +66,6 @@ class Register:AppCompatActivity() {
     fun register(binding: ActivityRegisterBinding, myAPI: RetrofitService,
     location_Si:Array<String>, location_gu:Array<String>, location_Dong:Array<String>){
         binding.btnRegister.setOnClickListener {
-
             var selected_si = ""
             var selected_gu = ""
             var selected_dong = ""
