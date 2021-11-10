@@ -6,7 +6,8 @@ data class RegisterSend(
     val user_id : String,
     val user_password : String,
     val nickname : String,
-    val location : UserLocation
+    val location : UserLocation,
+    val user_token : String
 )
 
 
