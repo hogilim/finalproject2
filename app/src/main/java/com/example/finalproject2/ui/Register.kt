@@ -1,9 +1,11 @@
 package com.example.finalproject2.ui
 
 import android.R
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -12,11 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.finalproject2.databinding.ActivityRegisterBinding
 import com.example.finalproject2.retrofit2.RetrofitClient
 import com.example.finalproject2.retrofit2.RetrofitService
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class Register:AppCompatActivity() {
+    lateinit var token : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -35,15 +40,32 @@ class Register:AppCompatActivity() {
         binding.selectSi.adapter = adapter_Si
         binding.selectGu.adapter = adapter_gu
         binding.selectDong.adapter = adapter_Dong
-
+        println("!!!!!!!!!!!!!")
+        getToken(binding)
         register(binding,myAPI,location_Si,location_gu,location_Dong)
 
     }
 
+    fun getToken(binding: ActivityRegisterBinding){
+        Runnable{
+            try {
+                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.i(TAG, "getInstanceId failed", task.exception)
+                        return@addOnCompleteListener
+                    }
+                    token = task.result!!
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }.run()
+    }
+
+
     fun register(binding: ActivityRegisterBinding, myAPI: RetrofitService,
     location_Si:Array<String>, location_gu:Array<String>, location_Dong:Array<String>){
         binding.btnRegister.setOnClickListener {
-
             var selected_si = ""
             var selected_gu = ""
             var selected_dong = ""

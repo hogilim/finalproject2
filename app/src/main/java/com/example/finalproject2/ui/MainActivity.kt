@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.NonNull
 import com.example.finalproject2.R
+import com.example.finalproject2.alarm.MyFirebaseMessagingService
 import com.example.finalproject2.data.login.LoginResponse
 import com.example.finalproject2.data.login.LoginSend
 import com.example.finalproject2.databinding.ActivityMainBinding
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         // retrofit instance
         val retrofit = RetrofitClient.getInstnace() //
         val myAPI = retrofit.create(RetrofitService::class.java)
-
         login(binding, myAPI)
         register(binding)
     }
@@ -112,6 +112,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }
 
 
