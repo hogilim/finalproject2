@@ -52,6 +52,11 @@ class DogFound: AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val binding = ActivityFoundBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val location_gu = resources.getStringArray(com.example.finalproject2.R.array.gu)
+        val adapter_gu = ArrayAdapter<String>(this, R.layout.simple_list_item_1, location_gu)
+        binding.selectGu.adapter = adapter_gu
+        takePicture(binding)
+        confirm(binding,location_gu)
         super.onActivityResult(requestCode, resultCode, data)
         //findViewById(R.id.result_image).setImageURI(photoUri);
         try {
