@@ -8,7 +8,7 @@
         android:id="@+id/picture"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_weight="5"
         android:layout_margin="10dp"/>
 
     <Button
@@ -16,9 +16,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="사진 등록" />
+        android:text="사진 촬영" />
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text=""
+        android:hint="제목"/>
 
     <RadioGroup
+        android:id="@+id/gender"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -41,10 +50,19 @@
         <RadioButton
             android:id="@+id/unknown"
             android:layout_width="0dp"
+            android:checked="true"
             android:layout_height="match_parent"
             android:text="불확실"
             android:layout_weight="1"/>
     </RadioGroup>
+
+    <Spinner
+        android:id="@+id/select_gu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구"
+        android:layout_margin="10dp"
+        android:layout_weight="1"/>
 
     <EditText
         android:id="@+id/content"

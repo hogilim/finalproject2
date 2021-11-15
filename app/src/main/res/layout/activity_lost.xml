@@ -4,6 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:layout_margin="10dp"/>
+    <Button
+        android:id="@+id/select_picture"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="사진 등록" />
+
     <EditText
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -12,13 +26,6 @@
         android:text=""
         android:hint="제목"/>
 
-    <ImageView
-        android:id="@+id/picture"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:layout_margin="10dp"/>
-
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
@@ -26,6 +33,14 @@
         android:layout_weight="1"
         android:text=""
         android:hint="견공 이름"/>
+
+    <Spinner
+        android:id="@+id/select_gu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구"
+        android:layout_margin="10dp"
+        android:layout_weight="1"/>
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -37,6 +52,7 @@
             android:id="@+id/male"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:checked="true"
             android:text="남아"
             android:layout_weight="1"/>
 

@@ -1,5 +1,6 @@
 package com.example.finalproject2.ui
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -37,6 +38,22 @@ class Board:AppCompatActivity() {
         initRecycler(binding,myAPI)
         swipeRefresh(binding,myAPI)
         scrollUpdate(binding,myAPI)
+        dogFound(binding)
+        dogLost(binding)
+    }
+
+    private fun dogFound(binding: ActivityBoardBinding){
+        binding.btnFind.setOnClickListener {
+            val intent = Intent(this, DogFound::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun dogLost(binding: ActivityBoardBinding){
+        binding.btnLost.setOnClickListener {
+            val intent = Intent(this, DogLost::class.java)
+            startActivity(intent)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

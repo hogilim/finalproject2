@@ -4,24 +4,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.NonNull
 import com.example.finalproject2.R
-import com.example.finalproject2.alarm.MyFirebaseMessagingService
-import com.example.finalproject2.data.login.LoginResponse
 import com.example.finalproject2.data.login.LoginSend
 import com.example.finalproject2.databinding.ActivityMainBinding
 import com.example.finalproject2.retrofit2.RetrofitClient
 import com.example.finalproject2.retrofit2.RetrofitService
+import com.example.finalproject2.cam.Cam
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import java.security.AccessController.getContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // retrofit instance
@@ -33,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun login(binding: ActivityMainBinding, myAPI: RetrofitService) {
         binding.btnLogin.setOnClickListener {
+            /// cam test
+            ///val i = Intent(this, Cam::class.java)
+            ///startActivity(i)
+            ///
             val id = binding.editId.text.toString()
             val pw = binding.editPw.text.toString()
             // 입력 확인

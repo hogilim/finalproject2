@@ -32,15 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <provider
-            android:authorities="com.example.finalproject2.camara"
-            android:name="androidx.core.content.FileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FIlE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
-        </provider>
         <service
             android:name=".alarm.MyFirebaseMessagingService">
             <intent-filter>
@@ -51,6 +42,19 @@
         <activity android:name=".ui.Register" />
         <activity android:name=".ui.Board" />
         <activity android:name=".ui.ShowItem" />
+        <activity android:name=".cam.Cam"/>
+        <activity android:name=".ui.DogFound"/>
+        <activity android:name=".ui.DogLost"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.finalproject2.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         
     </application>
 
