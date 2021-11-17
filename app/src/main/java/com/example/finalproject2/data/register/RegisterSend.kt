@@ -3,11 +3,11 @@ package com.example.finalproject2.data.register
 import java.io.Serializable
 
 data class RegisterSend(
-    val user_id : String,
-    val user_password : String,
-    val nickname : String,
+    val userId : String,
+    val password : String,
+    val nickName : String,
     val location : UserLocation,
-    val user_token : String
+    val userToken : String
 )
 
 

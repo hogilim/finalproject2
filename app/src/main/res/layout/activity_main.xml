@@ -8,11 +8,17 @@
     android:weightSum="10"
     tools:context=".ui.MainActivity"
     android:gravity="center">
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:src="@drawable/dog2"/>
     
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:text = "찾아줘 멍즈"
         android:layout_margin="10dp"
         android:textSize="50dp"/>

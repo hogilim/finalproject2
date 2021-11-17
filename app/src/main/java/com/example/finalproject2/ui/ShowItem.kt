@@ -25,5 +25,7 @@ class ShowItem : AppCompatActivity() {
 
         binding.name.text = data.dogName
         binding.gender.text = data.gender
+        binding.content.text = data.content
+        binding.date.text = data.regDate
     }
 }

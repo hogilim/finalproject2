@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
@@ -29,6 +30,14 @@ import com.example.finalproject2.BuildConfig
 import com.example.finalproject2.databinding.ActivityCamBinding
 import com.example.finalproject2.databinding.ActivityFoundBinding
 import com.example.finalproject2.databinding.ActivityMainBinding
+import com.example.finalproject2.retrofit2.RetrofitClient
+import com.example.finalproject2.retrofit2.RetrofitService
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -36,8 +45,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DogFound: AppCompatActivity() {
+    val retrofit = RetrofitClient.getInstnace() //
+    val myAPI = retrofit.create(RetrofitService::class.java)
     val REQUEST_TAKE_PHOTO = 1
     var mCurrentPhotoPath: String = ""
+    var memberId : Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityFoundBinding.inflate(layoutInflater)
@@ -45,6 +57,7 @@ class DogFound: AppCompatActivity() {
         val location_gu = resources.getStringArray(com.example.finalproject2.R.array.gu)
         val adapter_gu = ArrayAdapter<String>(this, R.layout.simple_list_item_1, location_gu)
         binding.selectGu.adapter = adapter_gu
+        memberId = intent.getLongExtra("memberId", -1)
         takePicture(binding)
         confirm(binding,location_gu)
     }
@@ -127,7 +140,47 @@ class DogFound: AppCompatActivity() {
                 }
             }
             if(!isExistBlank){
-                // retrofit 전송 후 리턴
+                ///////////////////
+                val memberId = MultipartBody.Part.createFormData("memberId", memberId.toString())
+                val t = binding.picture.getDrawable() as BitmapDrawable
+                val b = t.bitmap
+                val ba = ByteArrayOutputStream()
+                b.compress(Bitmap.CompressFormat.JPEG, 20, ba)
+                val rb = RequestBody.create("image/jpg".toMediaTypeOrNull(),ba.toByteArray())
+                val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val fileName = "photo" + timestamp +".jpeg"
+                val u = MultipartBody.Part.createFormData("files",fileName ,rb)
+                myAPI.found(
+                    memberId,
+                    //title,
+                    //gender,
+                    //content,
+                    u
+                ).enqueue(object : Callback<BoardUnit> {
+
+                    //이때 onFaliure는 Call을 서버쪽으로 아예 보내지 못한 경우입니다.
+                    override fun onFailure(call: Call<BoardUnit>, t: Throwable) {
+                        Toast.makeText(this@DogFound,"오류 다시 시도하세요.", Toast.LENGTH_SHORT).show()
+                        println("DogLost.onFailure -----")
+                        println(t.message)
+                    }
+
+                    //만약 보낸 것이 성공했을 경우는 resonse를 가지고 들어옵니다.
+                    //그리고 call을 때릴 때 RawResponseData로 갔으니까 Reponse도 그 타입을 가지고 옵니다.
+                    override fun onResponse(
+                        call: Call<BoardUnit>,
+                        response: Response<BoardUnit>
+                    ) {
+
+                        println("response : ${response.errorBody()}")
+                        println("response : ${response.message()}")
+                        println("response : ${response.code()}")
+                        println("response : ${response.raw().request.url.toUrl()}")
+                        println("response : ${response.body()}")
+
+                    }
+                })
+                ////////////////////
                 Toast.makeText(this@DogFound, "신고 성공.${gender}", Toast.LENGTH_SHORT).show()
                 finish()
             }

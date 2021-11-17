@@ -12,7 +12,7 @@ object RetrofitClient {
     fun getInstnace() : Retrofit {
         if(instance == null){
             instance = Retrofit.Builder()
-                .baseUrl("http://192.168.200.133:8080/")
+                .baseUrl("http://223.194.70.107:8080/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()

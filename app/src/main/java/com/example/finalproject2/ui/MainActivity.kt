@@ -10,11 +10,13 @@ import com.example.finalproject2.databinding.ActivityMainBinding
 import com.example.finalproject2.retrofit2.RetrofitClient
 import com.example.finalproject2.retrofit2.RetrofitService
 import com.example.finalproject2.cam.Cam
+import com.example.finalproject2.data.login.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    var memberId : Long = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "ID와 PW를 모두 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
                 val loginSend = LoginSend(id, pw)
-                /*
+
                 Runnable {
 
                     myAPI.login(
@@ -52,25 +54,31 @@ class MainActivity : AppCompatActivity() {
                             println(t.message)
                         }
 
-
                         //만약 보낸 것이 성공했을 경우는 resonse를 가지고 들어옵니다.
                         //그리고 call을 때릴 때 RawResponseData로 갔으니까 Reponse도 그 타입을 가지고 옵니다.
                         override fun onResponse(
                             call: Call<LoginResponse>,
                             response: Response<LoginResponse>
                         ) {
-                            Toast.makeText(this@MainActivity,"로그인 성공!", Toast.LENGTH_SHORT).show()
+
                             println("response : ${response.errorBody()}")
                             println("response : ${response.message()}")
                             println("response : ${response.code()}")
                             println("response : ${response.raw().request.url.toUrl()}")
-                            println("response : ${response.body()!!}")
-                            val intent = Intent(this@MainActivity,Board::class.java)
-                            startActivity(intent)
+                            println("response : ${response.body()}")
+                            if(response.body()!!.data >= 0 ) {
+                                memberId = response.body()!!.data
+                                Toast.makeText(this@MainActivity, "로그인 성공!${memberId}", Toast.LENGTH_SHORT)
+                                    .show()
+                                val intent = Intent(this@MainActivity, Board::class.java)
+                                intent.putExtra("memberId", memberId)
+                                startActivity(intent)
+                            }
                         }
                     })
                 }.run()
-                     */
+
+                /*
                 Runnable {
                     myAPI.test().enqueue(object : Callback<Boolean> {
 
@@ -101,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     })
                 }.run()
+                */
             }
         }
     }
