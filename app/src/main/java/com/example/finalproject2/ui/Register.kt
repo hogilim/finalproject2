@@ -22,6 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.lang.NullPointerException
 
 class Register:AppCompatActivity() {
     lateinit var token : String
@@ -163,13 +164,21 @@ class Register:AppCompatActivity() {
                             println("response : ${response.code()}")
                             println("response : ${response.raw().request.url.toUrl()}")
                             println("response : ${response.body()!!}")
-                            registerCheck = response.body()!!.data
-                            if(registerCheck >= 0) {
-                                Toast.makeText(this@Register, "회원가입 성공! 로그인하세요.", Toast.LENGTH_SHORT).show()
-                                finish()
-                            }
-                            else{
-                                Toast.makeText(this@Register, "회원가입 실패.", Toast.LENGTH_SHORT).show()
+                            try {
+                                registerCheck = response.body()!!.data
+                                if (registerCheck >= 0) {
+                                    Toast.makeText(
+                                        this@Register,
+                                        "회원가입 성공! 로그인하세요.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    finish()
+                                } else {
+                                    Toast.makeText(this@Register, "회원가입 실패.", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            }catch (e:NullPointerException){
+                                Toast.makeText(this@Register,"오류 다시 시도하세요.", Toast.LENGTH_SHORT).show()
                             }
                         }
                     })
