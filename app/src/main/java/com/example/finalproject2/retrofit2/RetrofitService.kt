@@ -1,5 +1,6 @@
 package com.example.finalproject2.retrofit2
 
+import com.example.finalproject2.data.CommonResponse
 import com.example.finalproject2.data.board.Page
 import com.example.finalproject2.data.board.BoardSend
 import com.example.finalproject2.data.login.LoginResponse
@@ -49,10 +50,9 @@ interface RetrofitService {
     @POST("dog-found")
     fun found(
         @Part memberId: MultipartBody.Part,
-        @Part title: MultipartBody.Part,
-        @Part dogName: MultipartBody.Part,
         @Part gender: MultipartBody.Part,
         @Part content: MultipartBody.Part,
+        @Part address: MultipartBody.Part,
         @Part files : MultipartBody.Part?
     ):Call<BoardUnit>
 
@@ -64,6 +64,12 @@ interface RetrofitService {
         @Part dogName: MultipartBody.Part,
         @Part gender: MultipartBody.Part,
         @Part content: MultipartBody.Part,
+        @Part address: MultipartBody.Part,
         @Part files : MultipartBody.Part?
     ):Call<BoardUnit>
+
+    @Headers("content-type: application/json")
+    @GET("dog-found/85")
+    fun alarm(
+    ):Call<CommonResponse>
 }

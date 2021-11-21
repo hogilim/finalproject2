@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okio.internal.commonAsUtf8ToByteArray
 
 class BoardAdapter(private val context: Context, private var dataSet: ArrayList<BoardUnit>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private val VIEW_TYPE_ITEM = 0
@@ -31,15 +32,17 @@ class BoardAdapter(private val context: Context, private var dataSet: ArrayList<
         val date : TextView = view.findViewById(R.id.date)
         fun bind(viewHolder: ViewHolder, position: Int){
             CoroutineScope(Dispatchers.Main).launch {
-                val bitmap = withContext(Dispatchers.IO){
-                    ImageLoader.loadImage(dataSet[position].fileUris[0])
+                if(dataSet[position].fileUris[0].length != 0) {
+                    val bitmap = withContext(Dispatchers.IO) {
+                        ImageLoader.loadImage(dataSet[position].fileUris[0])
+                    }
+                    viewHolder.dogimage.setImageBitmap(bitmap)
                 }
-                viewHolder.dogimage.setImageBitmap(bitmap)
             }
-            viewHolder.dogname.text = dataSet[position].dogName
-            viewHolder.doggennder.text = dataSet[position].gender
-            viewHolder.location.text = dataSet[position].address?.si + dataSet[position].address?.gu
-            viewHolder.date.text = dataSet[position].regDate
+            viewHolder.dogname.text = "이름 :   " + dataSet[position].dogName
+            viewHolder.doggennder.text = "성별 :   " + dataSet[position].gender
+            viewHolder.location.text =  "지역 :   서울시 "+dataSet[position].address?.gu
+            viewHolder.date.text = "등록일자 :   " + dataSet[position].regDate.substring(0,10)
         }
         init{
             view.setOnClickListener {

@@ -19,10 +19,7 @@ import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
@@ -103,8 +100,8 @@ class DogFound: AppCompatActivity() {
 
     private fun confirm(binding: ActivityFoundBinding, location_gu:Array<String>){
         var selected_gu = ""
-        var gender = "unknown"
-        var isExistBlank = false
+        var dgender = "UNIDENTIFIED"
+        var isExistBlank = true
         binding.confirm.setOnClickListener {
             binding.selectGu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -119,29 +116,19 @@ class DogFound: AppCompatActivity() {
 
                 }
             }
-            if(binding.title.text.toString().isEmpty()||selected_gu==""){
-                Toast.makeText(this, "모든 정보를 작성해주세요.", Toast.LENGTH_SHORT).show()
-                isExistBlank = true
-            }
-            else{
-                isExistBlank = false
-            }
-            binding.gender.setOnCheckedChangeListener { group, checkedId ->
-                when(checkedId) {
-                    binding.male.id->{
-                        gender = "male"
-                    }
-                    binding.female.id->{
-                        gender = "female"
-                    }
-                    else -> {
-                        gender = "unknown"
-                    }
-                }
-            }
-            if(!isExistBlank){
+
+            val radioGroup = binding.gender
+            val intSelectButton: Int = radioGroup.checkedRadioButtonId
+            val radioButton = findViewById<View>(intSelectButton) as RadioButton
+            dgender = radioButton.text.toString()
+            if(isExistBlank){
                 ///////////////////
                 val memberId = MultipartBody.Part.createFormData("memberId", memberId.toString())
+                val gender = MultipartBody.Part.createFormData("gender", dgender.toString())
+                val content = MultipartBody.Part.createFormData("content", binding.content.text.toString())
+                val address = MultipartBody.Part.createFormData("address", binding.selectGu.selectedItem.toString())
+
+
                 val t = binding.picture.getDrawable() as BitmapDrawable
                 val b = t.bitmap
                 val ba = ByteArrayOutputStream()
@@ -152,9 +139,9 @@ class DogFound: AppCompatActivity() {
                 val u = MultipartBody.Part.createFormData("files",fileName ,rb)
                 myAPI.found(
                     memberId,
-                    //title,
-                    //gender,
-                    //content,
+                    gender,
+                    content,
+                    address,
                     u
                 ).enqueue(object : Callback<BoardUnit> {
 

@@ -45,6 +45,8 @@
         <activity android:name=".cam.Cam"/>
         <activity android:name=".ui.DogFound"/>
         <activity android:name=".ui.DogLost"/>
+        <activity android:name=".ui.Alarm"/>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

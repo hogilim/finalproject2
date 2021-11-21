@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+
     var memberId : Long = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,13 @@ class MainActivity : AppCompatActivity() {
         val myAPI = retrofit.create(RetrofitService::class.java)
         login(binding, myAPI)
         register(binding)
+        showAlarm(binding)
+    }
+    private fun showAlarm(binding: ActivityMainBinding){
+        binding.showAlarm.setOnClickListener {
+            val intent = Intent(this, Alarm::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun login(binding: ActivityMainBinding, myAPI: RetrofitService) {
@@ -38,12 +46,11 @@ class MainActivity : AppCompatActivity() {
             val pw = binding.editPw.text.toString()
             // 입력 확인
             if (id.isEmpty() || pw.isEmpty()) {
-                Toast.makeText(this, "ID와 PW를 모두 입력하세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "ID와 PW를 모두 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
                 val loginSend = LoginSend(id, pw)
 
                 Runnable {
-
                     myAPI.login(
                        loginSend
                     ).enqueue(object : Callback<LoginResponse> {

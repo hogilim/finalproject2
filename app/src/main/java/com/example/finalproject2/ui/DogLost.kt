@@ -20,6 +20,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -51,6 +52,7 @@ import java.lang.Exception
 import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Collections.rotate
 
 class DogLost :AppCompatActivity(){
     val retrofit = RetrofitClient.getInstnace() //
@@ -64,9 +66,6 @@ class DogLost :AppCompatActivity(){
         val location_gu = resources.getStringArray(com.example.finalproject2.R.array.gu)
         val adapter_gu = ArrayAdapter<String>(this, R.layout.simple_list_item_1, location_gu)
         binding.selectGu.adapter = adapter_gu
-        val adapter_dogbreed = ArrayAdapter<String>(this, R.layout.simple_list_item_1,dogbreed)
-        binding.dogbreed.adapter = adapter_dogbreed
-
 
         memberId = intent.getLongExtra("memberId", -1)
 
@@ -80,16 +79,15 @@ class DogLost :AppCompatActivity(){
         val location_gu = resources.getStringArray(com.example.finalproject2.R.array.gu)
         val adapter_gu = ArrayAdapter<String>(this, R.layout.simple_list_item_1, location_gu)
         binding.selectGu.adapter = adapter_gu
-        val adapter_dogbreed = ArrayAdapter<String>(this, R.layout.simple_list_item_1,dogbreed)
-        binding.dogbreed.adapter = adapter_dogbreed
+
         getImage(binding)
         confirm(binding, location_gu)
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == OPEN_GALLERY){
             val currentImageUrl : Uri? = data?.data
             try{
-                val mybitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImageUrl)
-                binding.picture.setImageBitmap(mybitmap)
+                val myBitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImageUrl)
+                binding.picture.setImageBitmap(myBitmap)
 
             }catch (e:Exception){
                 e.printStackTrace()
@@ -111,8 +109,8 @@ class DogLost :AppCompatActivity(){
     private fun confirm(binding: ActivityLostBinding, location_gu:Array<String>){
         var selected_gu = ""
         var selected_breed: Long = 0
-        var gender = "unknown"
-        var isExistBlank = false
+        var dgender = "UNDEFINED"
+        var isExistBlank = true
         binding.confirm.setOnClickListener {
             binding.selectGu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -125,48 +123,33 @@ class DogLost :AppCompatActivity(){
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?){}
             }
-            binding.dogbreed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    selected_breed = position.toLong()
-                }
-                override fun onNothingSelected(parent: AdapterView<*>?){}
-            }
+            /*
             if(binding.title.text.toString().isEmpty()||selected_gu==""){
-                Toast.makeText(this, "모든 정보를 작성해주세요.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "모든 정보를 작성해주세요.", Toast.LENGTH_SHORT).show()
                 isExistBlank = true
             }
             else{
                 isExistBlank = false
-            }
-            binding.gender.setOnCheckedChangeListener { group, checkedId ->
-                when(checkedId) {
-                    binding.male.id->{
-                        gender = "male"
-                    }
-                    binding.female.id->{
-                        gender = "female"
-                    }
-                    else -> {
-                        gender = "unknown"
-                    }
-                }
-            }
+            }*/
+            val radioGroup = binding.gender
+            val intSelectButton: Int = radioGroup.checkedRadioButtonId
+            val radioButton = findViewById<View>(intSelectButton) as RadioButton
+            dgender = radioButton.text.toString()
+
+
             if(isExistBlank){
 
                 val memberId = MultipartBody.Part.createFormData("memberId", memberId.toString())
                 val title = MultipartBody.Part.createFormData("title", binding.title.text.toString())
-                val gender = MultipartBody.Part.createFormData("gender", gender.toString())
+                val gender = MultipartBody.Part.createFormData("gender", dgender)
                 val content = MultipartBody.Part.createFormData("content", binding.content.text.toString())
-                val dogName = MultipartBody.Part.createFormData("content", binding.name.text.toString())
+                val dogName = MultipartBody.Part.createFormData("dogName", binding.name.text.toString())
+                val address = MultipartBody.Part.createFormData("address", binding.selectGu.selectedItem.toString())
 
                 println("memberId = ${memberId}")
+                println("dogname!${dogName} ${binding.name.text.toString()}")
                 println("title = ${title}")
-                println("gender = ${gender}")
+                println("gender!! = ${dgender}${binding.gender.checkedRadioButtonId}")
                 println("content = ${content}")
 
                 val t = binding.picture.getDrawable() as BitmapDrawable
@@ -183,6 +166,7 @@ class DogLost :AppCompatActivity(){
                     dogName,
                     gender,
                     content,
+                    address,
                     u
                 ).enqueue(object : Callback<BoardUnit> {
 
