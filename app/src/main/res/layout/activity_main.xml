@@ -8,11 +8,17 @@
     android:weightSum="10"
     tools:context=".ui.MainActivity"
     android:gravity="center">
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:src="@drawable/dog2"/>
     
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:text = "찾아줘 멍즈"
         android:layout_margin="10dp"
         android:textSize="50dp"/>
@@ -58,7 +64,17 @@
             android:text="회원가입"
             android:layout_margin="5dp"/>
 
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/show_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:stateListAnimator="@null"
+        android:text="           "
+        />
 
 
     

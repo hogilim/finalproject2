@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.finalproject2">
-
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -43,6 +42,22 @@
         <activity android:name=".ui.Register" />
         <activity android:name=".ui.Board" />
         <activity android:name=".ui.ShowItem" />
+        <activity android:name=".cam.Cam"/>
+        <activity android:name=".ui.DogFound"/>
+        <activity android:name=".ui.DogLost"/>
+        <activity android:name=".ui.Alarm"/>
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.finalproject2.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        
     </application>
 
 

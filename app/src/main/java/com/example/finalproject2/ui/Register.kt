@@ -11,6 +11,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalproject2.data.register.RegisterResponse
+import com.example.finalproject2.data.register.RegisterSend
+import com.example.finalproject2.data.register.UserLocation
 import com.example.finalproject2.databinding.ActivityRegisterBinding
 import com.example.finalproject2.retrofit2.RetrofitClient
 import com.example.finalproject2.retrofit2.RetrofitService
@@ -136,7 +139,42 @@ class Register:AppCompatActivity() {
             // 양식 다 채우고 패스워드 잘 입력 시 서버 통신
             if(!isExistBlank && isPWSame){
                 // 서버 데이터 전송 후 유효하면 가입 성공 유효하지 않으면 실패 메시지
-                var registerCheck = false
+                var registerCheck : Long = -1
+                Runnable {
+                    myAPI.register(
+                        RegisterSend(id,pw,nickname, UserLocation("서울시", gu), token)
+                    ).enqueue(object : Callback<RegisterResponse> {
+
+                        //이때 onFaliure는 Call을 서버쪽으로 아예 보내지 못한 경우입니다.
+                        override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                            Toast.makeText(this@Register,"오류 다시 시도하세요.", Toast.LENGTH_SHORT).show()
+                            println(t.message)
+                        }
+
+
+                        //만약 보낸 것이 성공했을 경우는 resonse를 가지고 들어옵니다.
+                        //그리고 call을 때릴 때 RawResponseData로 갔으니까 Reponse도 그 타입을 가지고 옵니다.
+                        override fun onResponse(
+                            call: Call<RegisterResponse>,
+                            response: Response<RegisterResponse>
+                        ) {
+                            println("response : ${response.errorBody()}")
+                            println("response : ${response.message()}")
+                            println("response : ${response.code()}")
+                            println("response : ${response.raw().request.url.toUrl()}")
+                            println("response : ${response.body()!!}")
+                            registerCheck = response.body()!!.data
+                            if(registerCheck >= 0) {
+                                Toast.makeText(this@Register, "회원가입 성공! 로그인하세요.", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
+                            else{
+                                Toast.makeText(this@Register, "회원가입 실패.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    })
+                }.run()
+                /*
                 Runnable {
                     myAPI.test().enqueue(object : Callback<Boolean> {
 
@@ -168,7 +206,7 @@ class Register:AppCompatActivity() {
                             }
                         }
                     })
-                }.run()
+                }.run()*/
             }
 
         }

@@ -3,13 +3,12 @@ package com.example.finalproject2.data.lost
 import com.example.finalproject2.data.register.UserLocation
 
 data class LostSend(
-    val sid : Long,
+    val memberId : Long,
     val location : UserLocation,
     val title : String,
-    val dogname : String,
-    val doggender : String,
-    val dogage : Int,
-    val body : String,
-    val time : String,
-    val image : String
+    val dogName : String,
+    val dogGender : String,
+    val content : Int,
+    val gender : String,
+    val files : ArrayList<String>
 )

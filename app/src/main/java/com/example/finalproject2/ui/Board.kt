@@ -1,5 +1,6 @@
 package com.example.finalproject2.ui
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -33,16 +34,35 @@ class Board:AppCompatActivity() {
         val retrofit = RetrofitClient.getInstnace() //
         val myAPI = retrofit.create(RetrofitService::class.java)
         binding.rv.adapter = myAdapter
+        memberId = intent.getLongExtra("memberId", -1)
 
         initRecycler(binding,myAPI)
         swipeRefresh(binding,myAPI)
         scrollUpdate(binding,myAPI)
+        dogFound(binding)
+        dogLost(binding)
+    }
+
+    private fun dogFound(binding: ActivityBoardBinding){
+        binding.btnFind.setOnClickListener {
+            val intent = Intent(this, DogFound::class.java)
+            intent.putExtra("memberId", memberId)
+            startActivity(intent)
+        }
+    }
+
+    private fun dogLost(binding: ActivityBoardBinding){
+        binding.btnLost.setOnClickListener {
+            val intent = Intent(this, DogLost::class.java)
+            intent.putExtra("memberId", memberId)
+            startActivity(intent)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initRecycler(binding: ActivityBoardBinding, myAPI : RetrofitService) {  // 처음 진입시 10개 로
         var res : Page
-        /*
+
         myAPI.board(
            0,10
         ).enqueue(object : Callback<Page> {
@@ -73,9 +93,9 @@ class Board:AppCompatActivity() {
             }
         })
 
-         */
 
-        ////////////////////////////////////////////
+
+        /*///////////////////////////////////////////
         val a = arrayListOf(BoardUnit(1,
             1,
             arrayListOf<Long>(1),
@@ -100,6 +120,7 @@ class Board:AppCompatActivity() {
         myAdapter.dataUpdate()
         ////////////////////////////////////
 
+         */
     }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun swipeRefresh(binding: ActivityBoardBinding,myAPI: RetrofitService){
@@ -120,7 +141,7 @@ class Board:AppCompatActivity() {
                 if(!binding.rv.canScrollVertically(1)&&lastVisibleItemPosition==itemToTalCount) {
                     var res : Page
 
-                    //test/////////////////////////////////////////////
+                    /*/test/////////////////////////////////////////////
                     val a = arrayListOf(BoardUnit(1,
                         1,
                         arrayListOf<Long>(1),
@@ -138,7 +159,9 @@ class Board:AppCompatActivity() {
                     res = Page(a,p,10,10,false)
                     ////////////////////////////////////////////
 
-                    /*
+                     */
+
+
                     println(totpage)
                     myAPI.board(
                         totpage,10
@@ -179,8 +202,8 @@ class Board:AppCompatActivity() {
                                     myAdapter.deleteLoading()
                             }
                         }
-                    })*/
-                    /////////////////////////////////////
+                    })
+                    /*////////////////////////////////////
                     if (!res.last) {
                         myAdapter.deleteLoading()
                         dataSet.addAll(res.content)
@@ -197,6 +220,8 @@ class Board:AppCompatActivity() {
                             myAdapter.deleteLoading()
                     }
                     ///////////////////////////////////////////////
+
+                     */
                 }
             }
         })

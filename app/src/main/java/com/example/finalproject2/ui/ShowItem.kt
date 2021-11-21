@@ -23,7 +23,10 @@ class ShowItem : AppCompatActivity() {
         val madapter = ShowItemImageAdapter(Images)
         binding.dogimagelist.adapter = madapter
 
-        binding.name.text = data.dogName
-        binding.gender.text = data.gender
+        binding.title.text = "제목 :   " + data.title
+        binding.name.text = "이름 :   " + data.dogName
+        binding.gender.text = "성별 :   " + data.gender
+        binding.content.text = data.content
+        binding.date.text = data.regDate.substring(0,10)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.finalproject2.retrofit2
 
+import com.example.finalproject2.data.CommonResponse
 import com.example.finalproject2.data.board.Page
 import com.example.finalproject2.data.board.BoardSend
 import com.example.finalproject2.data.login.LoginResponse
@@ -9,27 +10,25 @@ import com.example.finalproject2.data.register.RegisterResponse
 import com.example.finalproject2.data.register.RegisterSend
 import com.example.finalproject2.data.unit.UnitResponse
 import com.example.finalproject2.data.unit.UnitSend
+import com.example.finalproject2.ui.BoardUnit
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.Body
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface RetrofitService {
-    @GET("hogi")
-    fun test():Call<Boolean>
-
-    @GET("image")
-    fun test2():Call<String>
 
     @Headers("content-type: application/json")
-    @POST("register")
+    @POST("member")
     fun register(
         @Body register : RegisterSend
     ):Call<RegisterResponse>
 
     @Headers("content-type: application/json")
-    @POST("login")
+    @POST("member/login")
     fun login(
         @Body login : LoginSend
     ):Call<LoginResponse>
@@ -48,15 +47,29 @@ interface RetrofitService {
     ):Call<UnitResponse>
 
     @Multipart
-    @POST("test-file-up1")
-    fun find(
-        @Part imageList : ArrayList<MultipartBody.Part>,
-        @PartMap map : MutableMap<String, RequestBody>
-    ):Call<String>
+    @POST("dog-found")
+    fun found(
+        @Part memberId: MultipartBody.Part,
+        @Part gender: MultipartBody.Part,
+        @Part content: MultipartBody.Part,
+        @Part address: MultipartBody.Part,
+        @Part files : MultipartBody.Part?
+    ):Call<BoardUnit>
+
+    @Multipart
+    @POST("dog-lost")
+    fun lost(
+        @Part memberId: MultipartBody.Part,
+        @Part title: MultipartBody.Part,
+        @Part dogName: MultipartBody.Part,
+        @Part gender: MultipartBody.Part,
+        @Part content: MultipartBody.Part,
+        @Part address: MultipartBody.Part,
+        @Part files : MultipartBody.Part?
+    ):Call<BoardUnit>
 
     @Headers("content-type: application/json")
-    @POST("dog-losts")
-    fun lost(
-        @Body lost : LostSend
-    ):Call<String>
+    @GET("dog-found/85")
+    fun alarm(
+    ):Call<CommonResponse>
 }
