@@ -14,6 +14,7 @@ import com.example.finalproject2.data.login.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.NullPointerException
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,10 +29,17 @@ class MainActivity : AppCompatActivity() {
         login(binding, myAPI)
         register(binding)
         showAlarm(binding)
+
+        val a = intent.getStringExtra("custom")?:""
+        //Toast.makeText(this@MainActivity, a, Toast.LENGTH_SHORT).show()
+
     }
+
     private fun showAlarm(binding: ActivityMainBinding){
-        binding.showAlarm.setOnClickListener {
-            val intent = Intent(this, Alarm::class.java)
+        val a = intent.getStringExtra("custom")?:""
+        if(a != ""){
+            val intent = Intent(this,Alarm::class.java)
+            intent.putExtra("memberId",a)
             startActivity(intent)
         }
     }
@@ -73,13 +81,21 @@ class MainActivity : AppCompatActivity() {
                             println("response : ${response.code()}")
                             println("response : ${response.raw().request.url.toUrl()}")
                             println("response : ${response.body()}")
-                            if(response.body()!!.data >= 0 ) {
-                                memberId = response.body()!!.data
-                                Toast.makeText(this@MainActivity, "로그인 성공!${memberId}", Toast.LENGTH_SHORT)
-                                    .show()
-                                val intent = Intent(this@MainActivity, Board::class.java)
-                                intent.putExtra("memberId", memberId)
-                                startActivity(intent)
+                            try {
+                                if (response.body()!!.data >= 0) {
+                                    memberId = response.body()!!.data
+                                    Toast.makeText(
+                                        this@MainActivity,
+                                        "로그인 성공!${memberId}",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                    val intent = Intent(this@MainActivity, Board::class.java)
+                                    intent.putExtra("memberId", memberId)
+                                    startActivity(intent)
+                                }
+                            }catch (e:NullPointerException){
+                                Toast.makeText(this@MainActivity,"오류 다시 시도하세요.", Toast.LENGTH_SHORT).show()
                             }
                         }
                     })
