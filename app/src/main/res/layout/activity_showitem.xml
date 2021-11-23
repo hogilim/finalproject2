@@ -57,14 +57,5 @@
         android:layout_weight="4"
         android:text="내용"/>
 
-    <Button
-        android:id="@+id/confirm"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
-        android:text="신고" />
-
-
 
 </LinearLayout>

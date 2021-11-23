@@ -41,6 +41,13 @@ interface RetrofitService {
     ):Call<Page>
 
     @Headers("content-type: application/json")
+    @GET("dog-found/dog-founds")
+    fun alarm(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ):Call<Page>
+
+    @Headers("content-type: application/json")
     @POST("Unit")
     fun unit(
         @Body unit : UnitSend
@@ -67,9 +74,11 @@ interface RetrofitService {
         @Part address: MultipartBody.Part,
         @Part files : MultipartBody.Part?
     ):Call<BoardUnit>
-
+/*
     @Headers("content-type: application/json")
     @GET("dog-found/85")
     fun alarm(
     ):Call<CommonResponse>
+
+*/
 }

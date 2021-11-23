@@ -32,11 +32,16 @@ class BoardAdapter(private val context: Context, private var dataSet: ArrayList<
         val date : TextView = view.findViewById(R.id.date)
         fun bind(viewHolder: ViewHolder, position: Int){
             CoroutineScope(Dispatchers.Main).launch {
-                if(dataSet[position].fileUris[0].length != 0) {
-                    val bitmap = withContext(Dispatchers.IO) {
-                        ImageLoader.loadImage(dataSet[position].fileUris[0])
+                try {
+                    if (dataSet[position].fileUris[0].length != 0) {
+                        val bitmap = withContext(Dispatchers.IO) {
+                            ImageLoader.loadImage(dataSet[position].fileUris[0])
+                        }
+                        viewHolder.dogimage.setImageBitmap(bitmap)
                     }
-                    viewHolder.dogimage.setImageBitmap(bitmap)
+                }
+                catch(e:IndexOutOfBoundsException){
+
                 }
             }
             viewHolder.dogname.text = "이름 :   " + dataSet[position].dogName
